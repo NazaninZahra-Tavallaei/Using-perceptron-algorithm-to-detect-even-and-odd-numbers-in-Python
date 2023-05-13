@@ -1,0 +1,42 @@
+import numpy as np
+
+# Define the perceptron function
+def perceptron(inputs, weights):
+    # Calculate the weighted sum of the inputs
+    weighted_sum = np.dot(inputs, weights)
+    # Apply the step function to the weighted sum
+    if weighted_sum >= 0:
+        return 1
+    else:
+        return -1
+
+# Define the training data
+training_inputs = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+training_outputs = np.array([-1, 1, 1, -1])
+
+# Initialize the weights with small random values
+weights = np.random.rand(2)
+
+# Set the learning rate
+learning_rate = 0.1
+
+# Train the perceptron
+for i in range(1000):
+    # Select a random training example
+    index = np.random.randint(4)
+    inputs = training_inputs[index]
+    target = training_outputs[index]
+    # Calculate the actual output of the perceptron
+    output = perceptron(inputs, weights)
+    # Update the weights based on the error
+    error = target - output
+    weights = weights + learning_rate * error * inputs
+
+# Test the perceptron
+test_inputs = np.array([[0, 2], [1, 3], [2, 4], [3, 5]])
+for inputs in test_inputs:
+    output = perceptron(inputs, weights)
+    if output == 1:
+        print(inputs, "is odd")
+    else:
+        print(inputs, "is even")
